@@ -9,6 +9,6 @@ typedef struct Packet{
     float humidity;         //4         16
 }Packet;
 
-void send_Packet(Packet *packet);
+void make_buffer_from_packet(Packet *packet,unsigned char *Buff,int BuffLen);
 
 #endif

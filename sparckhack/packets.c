@@ -38,6 +38,10 @@ float byte_to_float(const char * bytes)//Little Endian
     return num;
 }
 
+/*
+Gets the next packet which is avalaible, blocks if no packet is avalaible. If multiple packets are avalaible 
+then returns the first packet and keeps other packets in queue.
+*/
 void get_Packet(Packet *packet)
 {
     char RecvBuf[1024];
@@ -49,13 +53,13 @@ void get_Packet(Packet *packet)
     }
 
     char temp[8];
-    memcpy(RecvBuf,temp,sizeof(long long));
+    memcpy(temp,RecvBuf,sizeof(long long));
     packet->id = byte_to_ll(temp);
-    memcpy(RecvBuf+8,temp,sizeof(float));
+    memcpy(temp,RecvBuf+8,sizeof(float));
     packet->fill_level = byte_to_float(temp);
-    memcpy(RecvBuf+12,temp,sizeof(float));
+    memcpy(temp,RecvBuf+12,sizeof(float));
     packet->temp = byte_to_float(temp);
-    memcpy(RecvBuf+16,temp,sizeof(float));
+    memcpy(temp,RecvBuf+16,sizeof(float));
     packet->humidity = byte_to_float(temp);
 
 }

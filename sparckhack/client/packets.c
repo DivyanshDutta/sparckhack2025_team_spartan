@@ -37,12 +37,18 @@ float byte_to_float(const char * bytes)//Little Endian
     return num;
 }
 
-void get_Buffer(Packet *packet,char Buff[1024],int BuffLen)
+/*
+This function takes a packet struct and makes a Buffer from it, that can be sent over to the server
+*/
+void make_buffer_from_packet(Packet *packet,unsigned char *Buff,int BuffLen)
 {
     if(BuffLen<sizeof(Packet)){
         return;
     }
 
-
+    ll_to_byte(packet->id,Buff);
+    float_to_byte(packet->fill_level,Buff+8);
+    float_to_byte(packet->temp,Buff+12);
+    float_to_byte(packet->humidity,Buff+16);
 
 }

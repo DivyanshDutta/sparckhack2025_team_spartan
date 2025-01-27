@@ -7,6 +7,8 @@
 #include <winsock2.h>
 #include <Ws2tcpip.h>
 #include <stdio.h>
+#include <math.h>
+#include "packets.h"
 
 // Link with ws2_32.lib
 #pragma comment(lib, "Ws2_32.lib")
@@ -86,14 +88,38 @@ int client_close()
     WSACleanup();
 }
 
+float get_random()
+{
+    return ((float)rand())/RAND_MAX * 100.0;
+}
+
+void stress_test_server()
+{
+    char SendBuf[1024];
+    int BufLen = 1024;
+    Packet packet = {0};
+    float tmp;
+
+    for(int i=0;i<2;i++)
+    {
+        for(int j=1;j<=10;j++)
+        {
+            packet.id = (long long)j;
+            packet.fill_level = get_random();
+            packet.temp = get_random();
+            packet.humidity = get_random();
+            make_buffer_from_packet(&packet,SendBuf,BufLen);
+            send_Buffer(SendBuf,BufLen);
+        } 
+    }
+}
+
 int main()
 {
     client_init();
 
-    char SendBuf[1024];
-    int BufLen = 1024;
-    send_Buffer(SendBuf,BufLen);
-    
+    stress_test_server();
+
     client_close();
     return 0;
 }

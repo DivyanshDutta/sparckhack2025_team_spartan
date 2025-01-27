@@ -6,7 +6,7 @@
 #include "packets.h"
 
 #define MAX_BINS 1000000
-#define UPDATE_TIME 1
+#define UPDATE_TIME 0
 
 typedef enum Bin_type{
     BIN_BIODEGRADABLE_WASTE,
@@ -91,7 +91,19 @@ void show_bins()
     }
 }
 
-void *update_bins(void *arg)
+void update_bin(Packet *packet)
+{
+    if((packet->id>index) || (packet->id<1)){
+        printf("Incorrect id in packet, cannot update.\n");
+        printf("Id : %u \n",packet->id);
+        return;
+    }
+    bins[packet->id-1]->fill_level = packet->fill_level;
+    bins[packet->id-1]->temp = packet->temp;
+    bins[packet->id-1]->humidity = packet->humidity;
+}
+
+void *server_update(void *arg)
 {
     time_t start_time,current_time;
     time(&start_time);
@@ -105,6 +117,9 @@ void *update_bins(void *arg)
         }
         get_Packet(&packet);
         printf("Packet fetched.\n");
+        update_bin(&packet);
+        show_bins();
+        
         start_time = current_time;
     }
     return NULL;
@@ -120,7 +135,7 @@ int main()
     show_bins();
     
     pthread_t update_thread;
-    if(pthread_create(&update_thread,NULL,&update_bins,NULL)!=0){
+    if(pthread_create(&update_thread,NULL,&server_update,NULL)!=0){
         printf("Failed to create thread.\n");
         exit(1);
     }
