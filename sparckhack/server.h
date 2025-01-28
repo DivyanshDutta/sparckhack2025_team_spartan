@@ -5,7 +5,7 @@
 #include "packets.h"
 
 int server_init();
-void get_Buffer(char *RecvBuf,int BufLen);
+void get_Recv_Buffer(char *RecvBuf,int BufLen);
 int server_close();
 
 #endif

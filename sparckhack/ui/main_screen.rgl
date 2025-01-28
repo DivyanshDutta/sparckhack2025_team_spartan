@@ -1,0 +1,45 @@
+#
+# rgl layout text file (v4.0) - raygui layout file generated using rGuiLayout
+#
+# Number of controls:     32
+#
+# Ref. window:    r <x> <y> <width> <height>
+# Anchor info:    a <id> <name> <posx> <posy> <enabled>
+# Control info:   c <id> <type> <name> <rectangle> <anchor_id> <text>
+#
+r 0 40 -1 -1
+a 001 anchor01 0 0 1
+a 002 anchor02 1304 16 1
+a 003 anchor03 1304 448 1
+c 000 20 ScrollPanel001 0 0 1288 816 1 
+c 001 1 GroupBox002 1304 16 288 416 1 Bin Detail View
+c 002 5 button_restart 72 224 144 24 3 Restart Server
+c 003 1 GroupBox005 1304 448 288 304 1 Controls
+c 004 12 TextBox007 120 24 144 24 2 0001
+c 005 12 TextBox008 120 72 144 24 2 BIN_TYPE_MIXED
+c 006 12 TextBox009 120 120 144 24 2 50.0 %
+c 007 12 TextBox010 120 168 144 24 2 32.0 C
+c 008 12 TextBox011 120 216 144 24 2 90.0 %
+c 009 12 TextBox012 120 264 144 24 2 25.468913 N
+c 010 12 TextBox013 120 312 144 24 2 56.123468 E
+c 011 4 Label014 16 24 120 24 2 Bin Id
+c 012 4 Label015 16 72 120 24 2 Bin Type
+c 013 4 Label016 16 120 120 24 2 Fill Level
+c 014 4 Label017 16 168 120 24 2 Temprature
+c 015 4 Label018 16 216 120 24 2 Humidity
+c 016 4 Label019 16 264 120 24 2 Laattitude
+c 017 4 Label020 16 312 120 24 2 Longitude
+c 018 2 Line022 16 352 240 16 2 
+c 019 5 button_next 184 376 72 24 2 NEXT
+c 020 5 button_back 16 376 72 24 2 BACK
+c 021 5 button_save 96 376 80 24 2 SAVE
+c 022 5 button_stop 72 264 144 24 3 Stop Server
+c 023 4 Label025 16 32 96 24 3 Server IP
+c 024 4 Label026 16 80 96 24 3 Server Port
+c 025 12 TextBox027 112 32 152 24 3 192.168.1.1
+c 026 12 TextBox028 112 80 152 24 3 25517
+c 027 4 Label029 16 128 96 24 3 Map Server
+c 028 12 TextBox030 112 128 152 24 3 openstreetmap.org
+c 029 3 Panel029 1304 768 288 40 1 
+c 030 4 Label030 1312 776 272 24 1 Processing.....
+c 031 4 Label031 8 8 120 24 0 Bin List View

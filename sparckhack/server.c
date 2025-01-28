@@ -3,16 +3,22 @@
 #endif
 
 #define WIN32_LEAN_AND_MEAN
+#define UPDATE_TIME 0
 
 #include <winsock2.h>
 #include <Ws2tcpip.h>
 #include <stdio.h>
+#include <pthread.h>
 #include "server.h"
+#include "bins.h"
 
 // Link with ws2_32.lib
 #pragma comment(lib, "Ws2_32.lib")
 
+void *server_update(void *arg);
+
 static SOCKET RecvSocket;
+static pthread_t update_thread;
 
 int server_init()
 {
@@ -52,10 +58,16 @@ int server_init()
     }
 
     printf("Server Initialised.\n");
+
+    if(pthread_create(&update_thread,NULL,&server_update,NULL)!=0){
+        printf("Failed to create thread.\n");
+        exit(1);
+    }
+
     return 0;
 }
 
-void get_Buffer(char *RecvBuf,int BufLen)
+void get_Recv_Buffer(char *RecvBuf,int BufLen)
 {
     struct sockaddr_in SenderAddr;
     int SenderAddrSize = sizeof (SenderAddr); 
@@ -73,8 +85,33 @@ void get_Buffer(char *RecvBuf,int BufLen)
 
 }
 
+void *server_update(void *arg)
+{
+    time_t start_time,current_time;
+    time(&start_time);
+
+    Packet packet = {0};
+
+    while(1){
+        time(&current_time);
+        if((current_time-start_time)<UPDATE_TIME){
+            continue;
+        }
+        get_Packet(&packet);
+        pthread_testcancel(); //sets up a cancellation end point
+        printf("Packet fetched.\n");
+        update_bin(&packet);
+        show_bins();
+        
+        start_time = current_time;
+    }
+    return NULL;
+}
+
 int server_close()
 {
+    pthread_cancel(update_thread); //requests cancellation at a cancellation endpoint
+
     int iResult = 0;
 
     //-----------------------------------------------

@@ -47,11 +47,12 @@ void get_Packet(Packet *packet)
     char RecvBuf[1024];
     int BufLen = 1024;
 
-    get_Buffer(RecvBuf,BufLen);
+    get_Recv_Buffer(RecvBuf,BufLen);
     if(BufLen<16){
         return;
     }
 
+    /*
     char temp[8];
     memcpy(temp,RecvBuf,sizeof(long long));
     packet->id = byte_to_ll(temp);
@@ -61,5 +62,8 @@ void get_Packet(Packet *packet)
     packet->temp = byte_to_float(temp);
     memcpy(temp,RecvBuf+16,sizeof(float));
     packet->humidity = byte_to_float(temp);
+    */
+
+    memcpy(packet,RecvBuf,sizeof(Packet));
 
 }
