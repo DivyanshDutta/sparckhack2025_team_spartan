@@ -1,6 +1,6 @@
 <h1>Convolution 2025</h1>
 <h3>Event : Sparckhack</h3>
-<h4><Team : Spartan</h4>
+<h4>Team : Spartan</h4>
 
 <p> Problem Statment : Smart Waste Management System : ( PS 1 )
                   Develop a waste management solution that optimizes waste collection
