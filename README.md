@@ -19,4 +19,4 @@ This is the code for a smart bin which can communicate its status to a central s
 
 The main function is in the application.c file.
 
-<img src="application_window.png" alt="Application Window" width="500" height="600">
+<img src="application_window.png" alt="Application Window">
