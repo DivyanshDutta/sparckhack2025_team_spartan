@@ -1,21 +1,9 @@
-/*******************************************************************************************
-*
-*   LayoutName v1.0.0 - Tool Description
-*
-*   LICENSE: Propietary License
-*
-*   Copyright (c) 2022 raylib technologies. All Rights Reserved.
-*
-*   Unauthorized copying of this file, via any medium is strictly prohibited
-*   This project is proprietary and confidential unless the owner allows
-*   usage in any other form by expresely written permission.
-*
-**********************************************************************************************/
-
 #include "raylib.h"
+#include "server.h"
 
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
+#include <stdlib.h>
 
 //----------------------------------------------------------------------------------
 // Controls Functions Declaration
@@ -25,6 +13,20 @@ static void ButtonNext();
 static void ButtonBack();
 static void ButtonSave();
 static void ButtonStop();
+
+Image bin;
+Texture2D texture;
+
+extern void main_window_init()
+{
+    bin = LoadImage("ui\\dustbin.png");
+    ImageResize(&bin,90,90);
+    texture = LoadTextureFromImage(bin);
+    UnloadImage(bin);
+}
+
+void drawbins()
+{}
 
 extern void draw_main_window()
 {
@@ -56,6 +58,7 @@ extern void draw_main_window()
     //----------------------------------------------------------------------------------
 
             ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR))); 
+            //ClearBackground((Color){.r=40,.g=40,.b=40,.a=0});
 
             // raygui: controls drawing
             //----------------------------------------------------------------------------------
@@ -90,9 +93,10 @@ extern void draw_main_window()
             if (GuiTextBox((Rectangle){ 1416, 576, 152, 24 }, TextBox030Text, 128, TextBox030EditMode)) TextBox030EditMode = !TextBox030EditMode;
             GuiPanel((Rectangle){ 1304, 768, 288, 40 }, NULL);
             GuiLabel((Rectangle){ 1312, 776, 272, 24 }, "Processing.....");
-            GuiLabel((Rectangle){ 8, 8, 120, 24 }, "Bin List View");
+            GuiLabel((Rectangle){ 8, 0, 120, 24 }, "Bin List View");
             //----------------------------------------------------------------------------------
 
+    drawbins();
 }
 
 //------------------------------------------------------------------------------------
@@ -100,7 +104,8 @@ extern void draw_main_window()
 //------------------------------------------------------------------------------------
 static void ButtonRestart()
 {
-    // TODO: Implement control logic
+    server_close();
+    server_init();
 }
 static void ButtonNext()
 {
@@ -116,6 +121,6 @@ static void ButtonSave()
 }
 static void ButtonStop()
 {
-    // TODO: Implement control logic
+    server_close();
 }
 
